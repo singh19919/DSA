@@ -1,0 +1,44 @@
+class Solution {
+    public int minInsertions(String s) {
+        int length = s.length();
+    
+    StringBuilder reverse = new StringBuilder(s);
+    reverse = reverse.reverse();
+    
+    int lcsLength = lcs(s, reverse.toString(), length, length);
+    
+    return  length - lcsLength ;
+    }
+    
+    //returns the length of Longest Common Subsequence string
+public static int lcs(String a, String b, int m, int n){
+    
+    if(m==0 || n==0)
+        return 0;
+    
+    
+    int[][] dp = new int[m+1][n+1]; 
+// i -> m -> a.length
+// j -> n -> b.length
+
+    for(int i=0; i<m+1; i++)                    //initialization
+        dp[i][0] = 0;
+    for(int j=0; j<n+1; j++)
+        dp[0][j] = 0;
+    
+    
+    for(int i=1; i<m+1; i++){                   //iterative dp
+        for(int j=1; j<n+1; j++){
+            
+            if(a.charAt(i-1) == b.charAt(j-1))
+                dp[i][j] = 1 + dp[i-1][j-1];
+            
+            else
+                dp[i][j] = Math.max( dp[i-1][j], dp[i][j-1] );
+        }
+    }
+    
+    
+    return dp[m][n];
+}
+}
