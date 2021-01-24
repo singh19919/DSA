@@ -1,4 +1,5 @@
 /**
+*To get the  left side of view first add left node into queue.Rest of the code stays same.
  * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
