@@ -1,0 +1,123 @@
+Package com.ideserve.nilesh.questions;
+ 
+/**
+ * <b>IDeserve <br>
+ * <a href="<a class="vglnk" href="https://www.youtube.com/c/IDeserve" rel="nofollow"><span>https</span><span>://</span><span>www</span><span>.</span><span>youtube</span><span>.</span><span>com</span><span>/</span><span>c</span><span>/</span><span>IDeserve</span></a>"><a class="vglnk" href="https://www.youtube.com/c/IDeserve" rel="nofollow"><span>https</span><span>://</span><span>www</span><span>.</span><span>youtube</span><span>.</span><span>com</span><span>/</span><span>c</span><span>/</span><span>IDeserve</span></a></a>
+ * Finds 'n'th node from the end of a given linked list.
+ * @author Nilesh
+ */
+  
+public class NthNodeFromLast 
+{
+    private class ListNode
+    {
+        int value;
+        ListNode next;
+ 
+        ListNode(int value)
+        {
+            this.value = value;
+        }
+    }
+     
+    ListNode head;
+    ListNode tail;
+     
+    public NthNodeFromLast()
+    {
+         
+    }
+     
+    // appends node at the end of the list
+    private void appendNode(int value)
+    {
+        if (head == null)
+        {
+            head = new ListNode(value);
+            tail = head;
+            return;
+        }
+         
+        ListNode n = new ListNode(value);
+        tail.next = n;
+        tail = n;
+    }
+ 
+    public void createLinkedList()
+    {
+        for (int i = 1; i <= 7; i++)
+        {
+            appendNode(i);
+        }
+    }
+     
+     
+    public void printList()
+    {
+        ListNode temp = head;
+         
+        while (temp != null)
+        {
+            System.out.print(temp.value + "->");
+            temp = temp.next;
+        }
+        System.out.print("null");
+    }
+     
+     
+     
+    public int findNthFromEnd(int n)
+    {
+        ListNode node1 = head, node2 = head;
+         
+        int count = 1;
+         
+        // make 'node1' point to (n+1)th node from the beginning
+        while (node1 != null)
+        {
+            if (count == (n+1))  
+            {
+                break;
+            }
+             
+            count += 1;
+            node1 = node1.next;
+        }
+         
+        // if 'node1' is pointing to (n+1)th node from the beginning
+        // advance both 'node1' and 'node2' - one node at a time
+        // when node1 reaches at the end of the list, node2 would be pointing to 'n'th node from the last 
+        if (count == (n+1))
+        {
+            while (node1 != null)
+            {
+                node1 = node1.next;
+                node2 = node2.next;
+            }
+             
+            return node2.value;
+        }
+         
+        // if the length of the list is less than 'n'
+        else
+        {
+            System.out.println("\nError: The length of the list is less than " + n);
+            return -1;
+        }
+    }
+     
+     
+    public static void main(String[] args) 
+    {
+        NthNodeFromLast solution = new NthNodeFromLast();
+ 
+        solution.createLinkedList();
+         
+        solution.printList();
+         
+        System.out.println("\n\nrequired 'n'th node from the last is: " + solution.findNthFromEnd(2));
+    }
+}
+        
+Time Complexity is O(n)
+Space Complexity is O(1)        
