@@ -1,0 +1,59 @@
+Idea & Cases Explanation. Java + recursion
+At first, I think 2 parameters should be return in recursion. Then I find that we only need to update max once, so I move max to be a member parameter.
+
+Basic idea:
+
+    store/update max during post-order traversal(left-right-root).
+    return maximum branches
+    a) 0
+    b)root.val
+    c)root.val + dfs(root.left)
+    d) root.val + dfs(root.right)
+
+Whole situation can be broken down to four cases:
+
+    root
+    left<0 right<0
+    max = Math.max(0, root.val + 0 + 0), return Math.max(0,root.val)
+    root
+    left>0 right<0
+    max = Math.max(0, root.val + dfs(root.left) + 0), return Math.max(0, root.val + dfs(root.left))
+    root
+    left<0 right>0
+    max = Math.max(0, root.val + 0+ dfs(root.right) + 0), return Math.max(0, root.val + dfs(root.right))
+    root
+    left>0 right>0
+    max = Math.max(0, root.val + 0+ dfs(root.left) + dfs(root.right) ), return Math.max(0, root.val + dfs(root.left) + dfs(root.right))
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+  
+  int max = Integer.MIN_VALUE;
+    public int maxPathSum(TreeNode root) {
+        if(root == null) return 0;
+        backtrack(root);
+        return max;
+    }
+    private int backtrack(TreeNode root){
+        if(root == null) return 0;
+        int leftSum = Math.max(0, backtrack(root.left));//less than 0, then not take left branch
+        int rightSum = Math.max(0, backtrack(root.right));//less than 0, then not take right branch 
+        max = Math.max(max,leftSum + rightSum + root.val);//root,left + root, right + root, left + right + root;
+        return Math.max(0,Math.max(root.val + leftSum,root.val + rightSum));//take left+root or right+root or root or 0
+    }
+  
+}
