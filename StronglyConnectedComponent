@@ -9,7 +9,7 @@ package com.prac;
  *
  * <p>Time complexity: O(V+E)
  *
- * @author William Fiset, william.alexandre.fiset@gmail.com
+ * 
  */
 
 
